@@ -9,7 +9,7 @@ from datetime import datetime
 repo_url = "git@github.com:ministryofjustice/cloud-platform-environments.git"
 repo_dir = "./cloud-platform-environments"
 namespace_dir = "namespaces/live.cloud-platform.service.justice.gov.uk"
-source_namespace_name = "operations-engineering-join-github-dev"
+source_namespace_name = "operations-engineering-flask-template"
 branch_name_prefix = "add-new-namespace"
 
 logging.basicConfig(

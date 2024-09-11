@@ -1,5 +1,8 @@
 .ONESHELL:
 
+# Define the new namespace variable that can be passed as an argument
+NAMESPACE_NAME ?= default-namespace
+
 all:
 # Run MegaLinter
 lint:
@@ -34,5 +37,13 @@ logs:
 # Open a shell inside the running app container
 shell:
 	docker exec -it operations-engineering-flask-application /bin/sh
+
+# Target to run the Python script with pipenv, passing the namespace name
+run:
+	pipenv run python -m bin.make_new_cloud_platform_namespace $(NAMESPACE_NAME)
+
+# Target to clean the pipenv environment
+clean:
+	pipenv --rm
 
 .PHONY: build up down logs shell trivy-scan lint all

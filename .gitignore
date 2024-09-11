@@ -10,6 +10,7 @@ env/
 *.sha256
 terraform.tfstate
 .mypy_cache
+cloud-platform-environments
 docker
 secrets.yaml
 __pycache__

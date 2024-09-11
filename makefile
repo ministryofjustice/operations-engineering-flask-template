@@ -39,7 +39,8 @@ shell:
 	docker exec -it operations-engineering-flask-application /bin/sh
 
 # Target to run the Python script with pipenv, passing the namespace name
-run:
+# make new-namespace NAMESPACE_NAME=my-new-namespace
+new-namespace:
 	pipenv run python -m bin.make_new_cloud_platform_namespace $(NAMESPACE_NAME)
 
 # Target to clean the pipenv environment

@@ -96,19 +96,14 @@ pipenv run pre-commit install
 
 ### 4. Running the Application
 
-Start the Flask application locally using Docker:
+Start the Flask application locally using docker-compose:
 
 ```bash
+docker-compose build
 docker-compose up
 ```
 
-The application will be available at `http://localhost:5000/`.
-
-Alternatively, you can run the app directly using Flask:
-
-```bash
-pipenv run python app/run.py
-```
+The application will be available at `http://localhost:4567/`.
 
 ### 5. Running Tests
 
@@ -119,15 +114,6 @@ pipenv run pytest
 ```
 
 ## Deployment
-
-### Docker
-
-The repository includes a `Dockerfile` and `docker-compose.yaml` file for containerisation. Build and run the app in a Docker container:
-
-```bash
-docker build -t flask-template .
-docker run -p 5000:5000 flask-template
-```
 
 ### Kubernetes (Helm)
 
@@ -156,15 +142,13 @@ The application configuration is modularised in the `app/main/config/` directory
 
 ## Extending the Template
 
-Feel free to extend the template by adding more services, blueprints, or integrating additional tools such as databases or external APIs.
+Feel free to extend the template by adding more services and blueprints or integrating additional tools such as databases or external APIs.
 
----
 
 ### Contributions
 
-If you have suggestions or improvements to this template, feel free to open a pull request or raise an issue.
+If you have suggestions or improvements to this template, open a pull request or raise an issue.
 
 ### License
 
 This project is licensed under the MIT License.
-```

@@ -16,39 +16,39 @@ This repository serves as a template for creating Flask applications with a stru
 
 ```bash
 .
-├── Dockerfile                   # Docker image configuration
-├── LICENSE                      # Project license
+├── Dockerfile                  
+├── LICENSE                      
 ├── Pipfile                      # Pipenv dependencies
 ├── Pipfile.lock                 # Locked dependencies for Pipenv
-├── README.md                    # Project documentation (this file)
+├── README.md                    
 ├── app/                         # Application source code
 │   ├── __init__.py              # Application factory
 │   ├── app.py                   # Entry point for the app
 │   ├── main/                    # Main application module
-│   │   ├── config/              # Configuration files
-│   │   │   ├── app_config.py    # Application-specific configurations
+│   │   ├── config/              # Configuration files for the application
+│   │   │   ├── app_config.py    # Application-specific configurations i.e. env vars
 │   │   │   ├── cors_config.py   # CORS configuration
-│   │   │   ├── error_handlers_config.py  # Error handler configurations
-│   │   │   ├── jinja_config.py  # Jinja template configurations
-│   │   │   ├── limiter_config.py  # Rate limiter configuration
-│   │   │   ├── logging_config.py  # Logging configuration
-│   │   │   ├── routes_config.py   # Routes configuration
-│   │   │   └── sentry_config.py   # Sentry error tracking configuration
+│   │   │   ├── error_handlers_config.py
+│   │   │   ├── jinja_config.py  
+│   │   │   ├── limiter_config.py 
+│   │   │   ├── logging_config.py
+│   │   │   ├── routes_config.py 
+│   │   │   └── sentry_config.py 
 │   │   ├── middleware/          # Middleware for request/response handling
 │   │   │   ├── error_handler.py  # Custom error handler middleware
-│   │   ├── routes/              # Application routes
+│   │   ├── routes/              
 │   │   │   ├── main.py          # Main route definitions
 │   │   │   └── robots.py        # Robots.txt handler route
-│   │   ├── services/            # Service layer
+│   │   ├── services/            # Service layer, where you put things like slack and github services
 │   │   └── validators/          # Input validation
 │   ├── run.py                   # Script to run the application
 │   ├── static/                  # Static files (images, JS, CSS, fonts)
 │   └── templates/               # HTML templates
 │       ├── components/          # Reusable HTML components
 │       └── pages/               # Page templates
-├── docker-compose.yaml          # Docker Compose for multi-container setups
-├── docker-test.yaml             # Docker Compose for testing environment
-├── helm/                        # Helm chart for Kubernetes deployment
+├── docker-compose.yaml          
+├── docker-test.yaml             
+├── helm/                        # Helm chart for cloud platform deployments
 │   └── application/             
 │       ├── Chart.yaml           # Helm chart metadata
 │       ├── templates/           # Kubernetes resource templates

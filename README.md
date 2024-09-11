@@ -1,4 +1,4 @@
-# Flask Application Template
+# 🗄️ Flask Application Template
 
 This repository serves as a template for creating Flask applications with a structured design, best practices, and tooling for development and deployment. It includes Docker support, linting, and configurations to help standardise projects within the team.
 

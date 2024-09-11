@@ -62,14 +62,14 @@ jobs:
 
       - name: Deploy helm chart to operations-engineering-join-github-prod
         run: |
-          helm upgrade join-github \
-            helm/join-github \
+          helm upgrade application \
+            helm/application \
             --install \
             --atomic \
             --force \
             --wait \
             --namespace ${KUBE_NAMESPACE} \
-            --values=helm/join-github/values-prod.yaml \
+            --values=helm/application/values-prod.yaml \
             --set app.deployment.env.APP_SECRET_KEY=${FLASK_APP_SECRET} \
             --set app.deployment.env.SENTRY_DSN_KEY=${SENTRY_DSN_KEY} \
             --set app.deployment.image.repository=${ECR_REGISTRY}/${ECR_REPOSITORY} \

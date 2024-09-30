@@ -24,7 +24,7 @@ jobs:
       id-token: write
       contents: read
     steps:
-      - uses: softprops/action-gh-release@vc062e08bd532815e2082a85e87e3ef29c3e6d191 #v2.0.8
+      - uses: actions/checkout@v4
 
       - uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502 # v4.0.2
         with:

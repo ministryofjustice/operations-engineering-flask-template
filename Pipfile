@@ -22,6 +22,7 @@ argparse = "*"
 setuptools = "==70.0.0"
 
 [dev-packages]
+coverage = "==7.4.4"
 
 [requires]
 python_version = "3.12"

@@ -3,6 +3,11 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 name = "pypi"
 
+[scripts]
+list_outdated = "pip list --outdated"
+tests = "coverage run -m unittest"
+tests_report = "coverage report --omit=./test/** --sort=cover --show-missing --skip-empty"
+
 [packages]
 email-validator = "==2.1.0.post1"
 flask = "==3.0.2"

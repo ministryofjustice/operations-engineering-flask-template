@@ -18,6 +18,6 @@ jobs:
         run: docker images
 
       - name: Run docker tests
-        uses: docker://gcr.io/gcp-runtimes/container-structure-test:f3b74dfc21a2cdb7eb7bd94b62dcf6519926a195 # v1.19.1
+        uses: docker://gcr.io/gcp-runtimes/container-structure-test:1.19.1@sha256:e991491408e7e5f76b97a5a8efc99513e535c96f15cf1c00ac80327dd4d034cb
         with:
           args: "test --image image-test --config docker-test.yaml"

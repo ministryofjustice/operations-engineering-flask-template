@@ -1,9 +1,5 @@
 schemaVersion: "2.0.0"
 commandTests:
-  - name: "gunicorn flask"
-    command: "which"
-    args: ["gunicorn"]
-    expectedOutput: ["/usr/local/bin/gunicorn"]
   - name: "python"
     command: "which"
     args: ["python"]

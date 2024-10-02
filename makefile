@@ -1,7 +1,7 @@
 .ONESHELL:
 
 # Define the new namespace variable that can be passed as an argument
-NAMESPACE_NAME ?= default-namespace
+REPOSITORY_NAME ?= default-namespace
 
 all:
 # Run MegaLinter
@@ -38,10 +38,10 @@ logs:
 shell:
 	docker exec -it operations-engineering-flask-application /bin/sh
 
-# Target to run the Python script with pipenv, passing the namespace name
-# make new-namespace NAMESPACE_NAME=my-new-namespace
+# Target to run the Python script with pipenv, passing the reposiotry name and environment as an argument
+# make new-namespace REPOSITORY_NAME=example-repo ENVIRONMENT=dev
 new-namespace:
-	pipenv run python -m bin.make_new_cloud_platform_namespace $(NAMESPACE_NAME)
+	pipenv run python -m bin.make_new_cloud_platform_namespace $(REPOSITORY_NAME) $(ENVIRONMENT)
 
 # Target to clean the pipenv environment
 clean:

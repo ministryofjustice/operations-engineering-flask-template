@@ -53,11 +53,14 @@ def copy_namespace_dir(new_namespace_name):
     return new_namespace_path
 
 
-def replace_namespace_in_files(new_namespace_name, new_namespace_path):
+def replace_namespace_in_files(
+    new_namespace_name: str,
+    new_namespace_path: str,
+    repository_name: str,
+    environment: str,
+):
     """Replace occurrences of the old namespace with the new one in all files."""
-    sanitized_repo_name = sanitize_github_repository_name(new_namespace_name)
-
-    for root, dirs, files in os.walk(new_namespace_path):
+    for root, _, files in os.walk(new_namespace_path):
         for file_name in files:
             file_path = os.path.join(root, file_name)
             with open(file_path, "r") as file:
@@ -65,13 +68,23 @@ def replace_namespace_in_files(new_namespace_name, new_namespace_path):
 
             # Replace all occurrences of the old namespace with the new one
             updated_content = re.sub(
-                source_namespace_name, new_namespace_name, file_content
+                source_namespace_name,
+                new_namespace_name,
+                file_content,
             )
 
-            # Replace github_repository_name variable with the sanitized new name (without '-dev')
+            # Specifically update the github_repository_name Terraform variable block
             updated_content = re.sub(
-                r'github_repository_name\s*=\s*".*?"',
-                f'github_repository_name = "{sanitized_repo_name}"',
+                r'variable "github_repository_name" \{([^\}]*)default\s*=\s*".*?"',
+                f'variable "github_repository_name" {{\\1default = "{repository_name}"',
+                updated_content,
+                flags=re.DOTALL,
+            )
+
+            # Replace occurrences of 'dev' with the selected environment (dev, staging, prod)
+            updated_content = re.sub(
+                r"\bdev\b",
+                environment,
                 updated_content,
             )
 
@@ -80,7 +93,7 @@ def replace_namespace_in_files(new_namespace_name, new_namespace_path):
                 file.write(updated_content)
 
             logger.info(
-                f"Updated {file_path} with new namespace: {new_namespace_name} and repository name: {sanitized_repo_name}"
+                f"Updated {file_path} with new namespace: {new_namespace_name} and repository name: {repository_name}"
             )
 
 
@@ -129,13 +142,16 @@ def create_pull_request(branch_name, new_namespace_name):
     logger.info(f"Created pull request for branch {branch_name}")
 
 
-def add_new_namespace(new_namespace_name):
+def add_new_namespace(repository: str, environment: str):
     """Main function to add a new namespace by cloning, copying, replacing, and pushing."""
     clone_repo()
+    new_namespace_name = f"{repository}-{environment}"
     branch_name = create_new_branch(new_namespace_name)
     new_namespace_path = copy_namespace_dir(new_namespace_name)
     if new_namespace_path:
-        replace_namespace_in_files(new_namespace_name, new_namespace_path)
+        replace_namespace_in_files(
+            new_namespace_name, new_namespace_path, repository, environment
+        )
         run_terraform_fmt(new_namespace_path + "/resources")
     commit_and_push_changes(new_namespace_name, branch_name)
     create_pull_request(branch_name, new_namespace_name)
@@ -162,13 +178,16 @@ def sanitize_github_repository_name(new_namespace_name):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description="Script to add a new namespace in cloud-platform, replace namespace name, and create a PR"
+        description="Add a new namespace to the cloud-platform-environments repository."
     )
+    parser.add_argument("repository_name", type=str, help="The name of your repository")
     parser.add_argument(
-        "new_namespace_name", type=str, help="The name of the new namespace"
+        "environment",
+        type=str,
+        help="The environment type you want.",
+        choices=["dev", "staging", "prod"],
     )
 
     args = parser.parse_args()
-    new_namespace_name = args.new_namespace_name
 
-    add_new_namespace(new_namespace_name)
+    add_new_namespace(args.repository_name, args.environment)

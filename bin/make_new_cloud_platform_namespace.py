@@ -136,9 +136,18 @@ def add_new_namespace(new_namespace_name):
     new_namespace_path = copy_namespace_dir(new_namespace_name)
     if new_namespace_path:
         replace_namespace_in_files(new_namespace_name, new_namespace_path)
+        run_terraform_fmt(new_namespace_path + "/resources")
     commit_and_push_changes(new_namespace_name, branch_name)
     create_pull_request(branch_name, new_namespace_name)
     clean_up_locally()
+
+
+def run_terraform_fmt(new_namespace_path):
+    """Run 'terraform fmt' to format the Terraform files in the new namespace directory."""
+    logger.info(f"Running 'terraform fmt' on {new_namespace_path}")
+    subprocess.run(["terraform", "fmt", new_namespace_path], check=True)
+    logger.info(f"Formatted Terraform files in {new_namespace_path}")
+
 
 def clean_up_locally():
     """Delete the cloud-platform-environments repository locally."""

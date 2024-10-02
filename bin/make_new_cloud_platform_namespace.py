@@ -138,6 +138,12 @@ def add_new_namespace(new_namespace_name):
         replace_namespace_in_files(new_namespace_name, new_namespace_path)
     commit_and_push_changes(new_namespace_name, branch_name)
     create_pull_request(branch_name, new_namespace_name)
+    clean_up_locally()
+
+def clean_up_locally():
+    """Delete the cloud-platform-environments repository locally."""
+    repo_dir = "./cloud-platform-environments"
+    os.system(f"rm -rf {repo_dir}")
 
 
 def sanitize_github_repository_name(new_namespace_name):

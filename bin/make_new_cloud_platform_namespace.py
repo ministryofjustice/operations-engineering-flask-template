@@ -61,7 +61,7 @@ def replace_namespace_in_files(
     for root, _, files in os.walk(new_namespace_path):
         for file_name in files:
             file_path = os.path.join(root, file_name)
-            with open(file_path, "r") as file:
+            with open(file_path, "r", encoding="utf-8") as file:
                 file_content = file.read()
 
             # Replace all occurrences of the old namespace with the new one
@@ -87,7 +87,7 @@ def replace_namespace_in_files(
             )
 
             # Write the updated content back to the file
-            with open(file_path, "w") as file:
+            with open(file_path, "w", encoding="utf-8") as file:
                 file.write(updated_content)
 
             logger.info(

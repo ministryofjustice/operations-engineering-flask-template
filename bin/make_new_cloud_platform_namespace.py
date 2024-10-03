@@ -41,12 +41,10 @@ def copy_namespace_dir(new_namespace_name):
     new_namespace_path = os.path.join(REPO_DIR, NAMESPACE_DIR, new_namespace_name)
 
     if not os.path.exists(source_namespace_path):
-        logger.error(f"Source directory {SOURCE_NAMESPACE} does not exist.")
-        return
+        logger.fatal(f"Source directory {SOURCE_NAMESPACE} does not exist.")
 
     if os.path.exists(new_namespace_path):
-        logger.error(f"Target directory {new_namespace_name} already exists.")
-        return
+        logger.fatal(f"Target directory {new_namespace_name} already exists.")
 
     shutil.copytree(source_namespace_path, new_namespace_path)
     logger.info(f"Copied {SOURCE_NAMESPACE} to {new_namespace_name}")

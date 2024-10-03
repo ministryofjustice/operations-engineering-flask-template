@@ -24,7 +24,7 @@ def clone_repo():
         logger.info("Cloning repository %s into %s, REPO_URL, REPO_DIR")
         subprocess.run(["git", "clone", REPO_URL], check=True)
     else:
-        logger.info(f"Repository already cloned at {REPO_DIR}")
+        logger.info("Repository already cloned at %s", REPO_DIR)
 
 
 def create_new_branch(new_namespace_name):

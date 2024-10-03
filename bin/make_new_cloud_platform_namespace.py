@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 def clone_repo():
     """Clone the cloud-platform-environments repository if not already cloned."""
     if not os.path.exists(REPO_DIR):
-        logger.info(f"Cloning repository {REPO_URL} into {REPO_DIR}")
+        logger.info("Cloning repository %s into %s, REPO_URL, REPO_DIR")
         subprocess.run(["git", "clone", REPO_URL], check=True)
     else:
         logger.info(f"Repository already cloned at {REPO_DIR}")
@@ -31,7 +31,6 @@ def create_new_branch(new_namespace_name):
     timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
     branch_name = f"{BRANCH_PREFIX}/{new_namespace_name}-{timestamp}"
     subprocess.run(["git", "checkout", "-b", branch_name], cwd=REPO_DIR, check=True)
-    logger.info(f"Created and switched to new branch: {branch_name}")
     return branch_name
 
 
@@ -41,13 +40,12 @@ def copy_namespace_dir(new_namespace_name):
     new_namespace_path = os.path.join(REPO_DIR, NAMESPACE_DIR, new_namespace_name)
 
     if not os.path.exists(source_namespace_path):
-        logger.fatal(f"Source directory {SOURCE_NAMESPACE} does not exist.")
+        logger.fatal("Source directory %s does not exist.", SOURCE_NAMESPACE)
 
     if os.path.exists(new_namespace_path):
-        logger.fatal(f"Target directory {new_namespace_name} already exists.")
+        logger.fatal("Target directory %s already exists.", new_namespace_name)
 
     shutil.copytree(source_namespace_path, new_namespace_path)
-    logger.info(f"Copied {SOURCE_NAMESPACE} to {new_namespace_name}")
     return new_namespace_path
 
 
@@ -90,14 +88,9 @@ def replace_namespace_in_files(
             with open(file_path, "w", encoding="utf-8") as file:
                 file.write(updated_content)
 
-            logger.info(
-                f"Updated {file_path} with new namespace: {new_namespace_name} and repository name: {repository_name}"
-            )
-
 
 def commit_and_push_changes(new_namespace_name, branch_name):
     """Commit and push the new namespace directory to the repository."""
-    logger.info(f"Committing changes for namespace {new_namespace_name}")
     subprocess.run(["git", "add", "."], cwd=REPO_DIR, check=True)
     subprocess.run(
         ["git", "commit", "-m", f"Add new namespace: {new_namespace_name}"],
@@ -108,9 +101,6 @@ def commit_and_push_changes(new_namespace_name, branch_name):
         ["git", "push", "--set-upstream", "origin", branch_name],
         cwd=REPO_DIR,
         check=True,
-    )
-    logger.info(
-        f"Pushed changes for namespace {new_namespace_name} to branch {branch_name}"
     )
 
 
@@ -137,7 +127,6 @@ def create_pull_request(branch_name, new_namespace_name):
         cwd=REPO_DIR,
         check=True,
     )
-    logger.info(f"Created pull request for branch {branch_name}")
 
 
 def add_new_namespace(repository: str, environment: str):
@@ -158,9 +147,7 @@ def add_new_namespace(repository: str, environment: str):
 
 def run_terraform_fmt(new_namespace_path):
     """Run 'terraform fmt' to format the Terraform files in the new namespace directory."""
-    logger.info(f"Running 'terraform fmt' on {new_namespace_path}")
     subprocess.run(["terraform", "fmt", new_namespace_path], check=True)
-    logger.info(f"Formatted Terraform files in {new_namespace_path}")
 
 
 def clean_up_locally():

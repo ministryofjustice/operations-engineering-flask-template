@@ -1,0 +1,8 @@
+extends: default
+
+ignore: helm/*
+
+rules:
+  empty-lines: disable
+  document-start:
+    present: false

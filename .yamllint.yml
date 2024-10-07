@@ -5,3 +5,5 @@ ignore: helm/*
 rules:
   empty-lines: disable
   document-start: disable
+  line-length: disable
+  comments-indentation: disable

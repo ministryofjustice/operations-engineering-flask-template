@@ -2,4 +2,5 @@ extends: default
 
 rules:
   empty-lines: disable
-  document-start: { present: false }
+  document-start:
+    present: false

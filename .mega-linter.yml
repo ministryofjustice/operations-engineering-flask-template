@@ -4,7 +4,6 @@
 
 APPLY_FIXES: all # all, none, or list of linter keys
 ENABLE_LINTERS:
-  - ACTION_ACTIONLINT
   - BASH_SHELLCHECK
   - HTML_HTMLHINT
   - MARKDOWN_MARKDOWNLINT
@@ -32,7 +31,3 @@ GITHUB_COMMENT_REPORTER: true
 VALIDATE_ALL_CODEBASE: false
 LOG_LEVEL: INFO
 MARKDOWN_MARKDOWN_LINK_CHECK_ARGUMENTS: "-q"
-
-PRE_COMMANDS:
-  - command: pip install -r /github/workspace/requirements.txt
-    venv: pylint

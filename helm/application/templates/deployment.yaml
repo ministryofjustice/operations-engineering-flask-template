@@ -2,14 +2,16 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "application.fullname" . }}
-  labels: {{ - include "application.labels" . | nindent 4 }}
+  labels:
+    {{- include "application.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.app.deployment.replicaCount }}
   selector:
-    matchLabels: {{ - include "application.selectorLabels" . | nindent 6 }}
+    matchLabels: {{- include "application.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      labels: {{ - include "application.selectorLabels" . | nindent 8 }}
+      labels:
+        {{- include "application.selectorLabels" . | nindent 8 }}
     spec:
       # serviceAccountName created by the Cloud Platform environment
       serviceAccountName: cd-serviceaccount

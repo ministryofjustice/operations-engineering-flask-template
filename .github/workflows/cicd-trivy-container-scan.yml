@@ -77,5 +77,5 @@ jobs:
               ]
             }
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.CVE_SCAN_SLACK_WEBHOOK }} # You will need to populate this value from the slack applications window.
+          SLACK_WEBHOOK_URL: ${{ secrets.CVE_SCAN_SLACK_WEBHOOK }} # You will need to populate this value from the slack window.
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK

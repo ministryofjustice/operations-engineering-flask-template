@@ -25,18 +25,24 @@ def replace_in_file(file_path, old_text, new_text):
         print(f"Skipping documentation file: {file_path}")
         return
 
-    with open(file_path, "r") as file:
-        content = file.read()
+    try:
+        with open(file_path, "r", encoding="utf-8") as file:
+            content = file.read()
 
-    new_content = content.replace(old_text, new_text)
+        new_content = content.replace(old_text, new_text)
 
-    with open(file_path, "w") as file:
-        file.write(new_content)
+        with open(file_path, "w", encoding="utf-8") as file:
+            file.write(new_content)
+
+        print(f"Replaced content in file: {file_path}")
+    except UnicodeDecodeError:
+        print(f"Skipping non-UTF-8 file: {file_path}")
+        return
 
 
 def rename_files_and_directories(root_dir, old_name, new_name):
-    # Traverse through the directory
-    for root, dirs, files in os.walk(root_dir):
+    # Traverse through the directory bottom-up to avoid skipping renamed directories
+    for root, dirs, files in os.walk(root_dir, topdown=False):
         # Rename files
         for file_name in files:
             file_path = os.path.join(root, file_name)
@@ -50,7 +56,7 @@ def rename_files_and_directories(root_dir, old_name, new_name):
                 new_file_name = file_name.replace(old_name, new_name)
                 new_file_path = os.path.join(root, new_file_name)
                 os.rename(file_path, new_file_path)
-                print(f"Renamed file {file_path} to {new_file_path}")
+                print(f"Renamed file: {file_path} -> {new_file_path}")
             else:
                 new_file_path = file_path
 
@@ -60,11 +66,15 @@ def rename_files_and_directories(root_dir, old_name, new_name):
         # Rename directories
         for dir_name in dirs:
             dir_path = os.path.join(root, dir_name)
-            if old_name in dir_name:
-                new_dir_name = dir_name.replace(old_name, new_name)
-                new_dir_path = os.path.join(root, new_dir_name)
+            new_dir_name = dir_name.replace(old_name, new_name)
+            new_dir_path = os.path.join(root, new_dir_name)
+
+            # Check if destination directory exists
+            if not os.path.exists(new_dir_path):
                 os.rename(dir_path, new_dir_path)
-                print(f"Renamed directory {dir_path} to {new_dir_path}")
+                print(f"Renamed directory: {dir_path} -> {new_dir_path}")
+            else:
+                print(f"Skipping renaming, directory already exists: {new_dir_path}")
 
 
 def main():
@@ -76,6 +86,9 @@ def main():
     old_name = sys.argv[2]
     new_name = sys.argv[3]
 
+    print(
+        f"Starting renaming process from '{old_name}' to '{new_name}' in directory: {root_directory}"
+    )
     rename_files_and_directories(root_directory, old_name, new_name)
     print("Project renaming completed!")
 

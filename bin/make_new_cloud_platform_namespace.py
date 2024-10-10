@@ -107,9 +107,7 @@ def commit_and_push_changes(new_namespace_name, branch_name):
 def create_pull_request(branch_name, new_namespace_name):
     """Use the GitHub CLI to create a pull request."""
     pr_title = f"Add new namespace: {new_namespace_name}"
-    pr_body = (
-        f"This PR creates a new namespace for the application {new_namespace_name}."
-    )
+    pr_body = f"This PR creates a new namespace for {new_namespace_name}."
     subprocess.run(
         [
             "gh",

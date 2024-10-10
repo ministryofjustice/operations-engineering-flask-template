@@ -2,7 +2,7 @@
 rename_project.py
 
 This script automates the renaming process of a Flask template repository. 
-It replaces all instances of a placeholder project name (like 'template-app-name') 
+It replaces all instances of a placeholder project name (like 'application') 
 in filenames, directory names, and file contents with a new project name provided 
 by the developer, **excluding** Markdown documentation files (.md). This is useful when 
 starting a new project from a template, as it saves time and ensures consistency 

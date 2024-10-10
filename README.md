@@ -86,13 +86,31 @@ Activate the virtual environment:
 pipenv shell
 ```
 
-### 3. Set Up Pre-commit Hooks
+### 3. Rename your application
 
-This project uses `pre-commit` hooks to maintain code quality. Install and set up the hooks:
 
-```bash
-pipenv run pre-commit install
-```
+After cloning this template repository, you may want to rename the project to your desired application name. This project includes a Python script to help automate the renaming process.
+
+#### Steps to Rename the Project:
+
+1. **Run the rename script**:
+   
+   Once you've cloned the repository, you can rename all instances of the placeholder name (`application`) to your desired project name. Use the following command:
+
+   ```bash
+   make rename NEW_NAME=<your-new-project-name>
+   ```
+
+   For example, to rename the project to `my-flask-app`:
+
+   ```bash
+   make rename NEW_NAME=my-flask-app
+   ```
+
+2. **Verify the renaming**:
+
+   The `rename_project.py` script will replace the placeholder name `application` with your new project name across all relevant files and directories. After running the rename command, you can check that the project structure, files, and configurations have been updated accordingly.
+
 
 ### 4. Running the Application
 

@@ -23,7 +23,7 @@ WORKDIR /home/operations-engineering-application
 RUN chown -R appuser:appgroup /home/operations-engineering-application
 
 # Switch to non-root user
-USER appuser
+USER 1051
 
 # Copy Pipfile and Pipfile.lock
 COPY --chown=appuser:appgroup Pipfile Pipfile.lock ./
